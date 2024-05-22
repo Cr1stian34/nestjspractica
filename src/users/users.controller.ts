@@ -1,4 +1,11 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { UsersService } from './users.service';
 
-@Controller('users')
-export class UsersController {}
+@Controller()
+export class UsersController {
+  constructor(private usersService: UsersService) {}
+  @Get('/users')
+  getUsers() {
+    return this.usersService.getUsers();
+  }
+}

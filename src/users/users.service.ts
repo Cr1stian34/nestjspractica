@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user.dto';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class UsersService {
@@ -17,6 +18,12 @@ export class UsersService {
   }
 
   createUser(user: CreateUserDTO) {
+    const email = this.users.find((u) => u.email === user.email);
+
+    if (email) {
+      return 'El usuario ya existe ingrese otro nuevo';
+    }
+
     this.users.push({ ...user, id: this.users.length + 1 });
     return user;
   }
